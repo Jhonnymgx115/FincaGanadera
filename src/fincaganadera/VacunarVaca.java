@@ -18,11 +18,8 @@ public class VacunarVaca extends javax.swing.JFrame {
      */
     public VacunarVaca() {
         initComponents();
-        GestionFinca gf = new GestionFinca();
-        gf.CargarCsvTabla(TablaVacanacion);
+        GestionFinca.CargarCsvTabla(TablaVacanacion);
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,8 +34,6 @@ public class VacunarVaca extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         BotonVacuna = new javax.swing.JButton();
         btn_atras = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        VacasVacunas = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaVacanacion = new javax.swing.JTable();
 
@@ -59,10 +54,6 @@ public class VacunarVaca extends javax.swing.JFrame {
                 btn_atrasActionPerformed(evt);
             }
         });
-
-        VacasVacunas.setColumns(20);
-        VacasVacunas.setRows(5);
-        jScrollPane1.setViewportView(VacasVacunas);
 
         TablaVacanacion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -97,18 +88,17 @@ public class VacunarVaca extends javax.swing.JFrame {
                             .addComponent(btn_atras)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addGap(328, 328, 328)
-                                .addComponent(jLabel1))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(328, 328, 328)
+                                        .addComponent(jLabel1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(51, 51, 51)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE))))
+                        .addGap(319, 319, 319)
+                        .addComponent(BotonVacuna)))
                 .addContainerGap(41, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(BotonVacuna)
-                .addGap(329, 329, 329))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,15 +111,14 @@ public class VacunarVaca extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(182, 182, 182)
-                        .addComponent(jLabel5))
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BotonVacuna)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)))
+                .addComponent(BotonVacuna)
+                .addGap(29, 29, 29))
         );
 
         pack();
@@ -137,26 +126,21 @@ public class VacunarVaca extends javax.swing.JFrame {
 
     private void BotonVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonVacunaActionPerformed
         int filasel = TablaVacanacion.getSelectedRow();
-        
-         if (filasel != -1) {
-             
-            
+        if (filasel != -1) {
             DefaultTableModel modeloVacunar = (DefaultTableModel) TablaVacanacion.getModel();
-            System.out.println(modeloVacunar.getValueAt(filasel, 4));
             if (String.valueOf(modeloVacunar.getValueAt(filasel, 4)).equals("V")) {
-                String[] filadatos = new String[modeloVacunar.getColumnCount()];
-                for (int i = 0; i < modeloVacunar.getColumnCount(); i++) {
-                    filadatos[i] = String.valueOf(modeloVacunar.getValueAt(filasel, i));
+                JOptionPane.showMessageDialog(null, "La vaca esta vacunada");
+            } else {
+                String[] vacunada = new String[6];
+                for (int i = 0; i < vacunada.length; i++) {
+                    vacunada[i] = String.valueOf(modeloVacunar.getValueAt(filasel, i));
                 }
-                modeloVacunar.addRow(filadatos);
-            }else {
-                JOptionPane.showMessageDialog(null, "La vaca esta vacunada"+ "ID" + "no se puede vacunar");
+                vacunada[4] = "V";
+                JOptionPane.showMessageDialog(null, "La vaca " + vacunada[0] +" esta vacunada");
+                GestionFinca.actualizarCSV(vacunada, filasel);
+                GestionFinca.CargarCsvTabla(TablaVacanacion);
             }
-
-         }else{
-            JOptionPane.showMessageDialog(null, "NO has seleccionado ninguna vaca");
         }
-                
     }//GEN-LAST:event_BotonVacunaActionPerformed
 
     private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
@@ -203,11 +187,9 @@ public class VacunarVaca extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonVacuna;
     private javax.swing.JTable TablaVacanacion;
-    private javax.swing.JTextArea VacasVacunas;
     private javax.swing.JButton btn_atras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }
