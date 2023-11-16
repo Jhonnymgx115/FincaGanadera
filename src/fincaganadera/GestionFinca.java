@@ -22,12 +22,9 @@ import javax.swing.table.DefaultTableModel;
 public class GestionFinca {
 
     private static final String rutacsv = "datos_vacas.csv";
-<<<<<<< Updated upstream
+
     private static final String[] razas = {"Blanco Orejinegro", "Casanareño", "Chino Santadereano","Costeño con Cuernos", "Harton del Valle", "Romosinuano"};
-=======
-    public static final String[] razas = {"Blanco Orejinegro", "Casanareño", "Chino Santadereano",
-        "Costeño con Cuernos", "Harton del Valle", "Romosinuano"};
->>>>>>> Stashed changes
+
 
     public static String[][] leerCSV() {
         String[][] datos = null;

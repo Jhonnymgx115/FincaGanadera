@@ -20,7 +20,9 @@ public class MoverVacas extends javax.swing.JFrame {
     public MoverVacas() {
         
          initComponents();
+         
          comboLlegada();
+         PotreroDestino.setSelectedItem(null);
         GestionFinca gf = new GestionFinca();
         gf.CargarCsvTabla(TablaVacas);
          
@@ -150,6 +152,7 @@ public class MoverVacas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "La vaca " + vaca[0] +" se movio");
                 GestionFinca.actualizarCSV(vaca, filasel);
                 GestionFinca.CargarCsvTabla(TablaVacas);
+                PotreroDestino.setSelectedItem(null);
             }
         }
     }//GEN-LAST:event_MoverActionPerformed
