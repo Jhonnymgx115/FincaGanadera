@@ -19,7 +19,7 @@ public class VenderVaca extends javax.swing.JFrame {
     public VenderVaca() {
         initComponents();
         GestionFinca gf = new GestionFinca();
-        gf.LeerCsv(TablaVender);
+        gf.CargarCsvTabla(TablaVender);
     }
 
     /**
@@ -195,7 +195,7 @@ public class VenderVaca extends javax.swing.JFrame {
 
     private void BotonRevisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonRevisarActionPerformed
         int pesovacas = 0;
-        int pesocarros = 2000;
+        int pesocarros = 6000;
         DefaultTableModel modeloVendidas = (DefaultTableModel) TablaVendidas.getModel();
 
         try {
