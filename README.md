@@ -17,7 +17,8 @@ Este proyecto consiste en una aplicación que simula el manejo de una finca gana
 ## Requisitos
 
 - Java 11
-- JFreechart 
+- JFreechart
+- NetBeans
 
 ## Instalación
 
