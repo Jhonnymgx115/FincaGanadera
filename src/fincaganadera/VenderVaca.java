@@ -74,7 +74,7 @@ public class VenderVaca extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(TablaVender);
 
-        BotonVender.setText("Vender!");
+        BotonVender.setText("Vender");
         BotonVender.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonVenderActionPerformed(evt);
@@ -113,23 +113,26 @@ public class VenderVaca extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 615, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(btn_atras))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(242, 242, 242)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(BotonVender)
-                                    .addComponent(jLabel1)))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(224, 224, 224)
                                 .addComponent(BotonRevisar)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)))
+                        .addGap(242, 242, 242)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(255, 255, 255)
+                .addComponent(BotonVender)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -173,18 +176,21 @@ public class VenderVaca extends javax.swing.JFrame {
         if (filasel != -1) {
             DefaultTableModel modeloVender = (DefaultTableModel) TablaVender.getModel();
             DefaultTableModel modeloVendidas = (DefaultTableModel) TablaVendidas.getModel();
-
-            System.out.println(modeloVender.getValueAt(filasel, 4));
-            if (String.valueOf(modeloVender.getValueAt(filasel, 4)).equals("V")) {
-
-                String[] filadatos = new String[modeloVender.getColumnCount()];
+            if (String.valueOf(modeloVender.getValueAt(filasel, 5)).equals("Disponible")) {
+                String[] vendida = new String[modeloVender.getColumnCount()];
                 for (int i = 0; i < modeloVender.getColumnCount(); i++) {
-                    filadatos[i] = String.valueOf(modeloVender.getValueAt(filasel, i));
+                    vendida[i] = String.valueOf(modeloVender.getValueAt(filasel, i));
                 }
-                modeloVendidas.addRow(filadatos);
+                vendida[2] = "Esp";
+                vendida[vendida.length - 1] = "En Venta";
+                JOptionPane.showMessageDialog(null, "La vaca " + vendida[0] +" vendida");
+                GestionFinca.actualizarCSV(vendida, filasel);
+                GestionFinca.CargarCsvTabla(TablaVender);
+                modeloVendidas.addRow(vendida);
                 modeloVender.removeRow(filasel);
+                
             } else {
-                JOptionPane.showMessageDialog(null, "La vaca no esta vacunada, no se puede vender");
+                JOptionPane.showMessageDialog(null, "La vaca ya esta vendida");
             }
 
         } else {

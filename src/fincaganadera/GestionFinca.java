@@ -22,8 +22,7 @@ import javax.swing.table.DefaultTableModel;
 public class GestionFinca {
 
     private static final String rutacsv = "datos_vacas.csv";
-    private static final String[] razas = {"Blanco Orejinegro", "Casanareño", "Chino Santadereano",
-        "Costeño con Cuernos", "Harton del Valle", "Romosinuano"};
+    private static final String[] razas = {"Blanco Orejinegro", "Casanareño", "Chino Santadereano","Costeño con Cuernos", "Harton del Valle", "Romosinuano"};
 
     public static String[][] leerCSV() {
         String[][] datos = null;
@@ -59,16 +58,10 @@ public class GestionFinca {
             datos[nfila] = nuevosDatos;
 
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutacsv))) {
-                for (int i = 0; i < datos.length; i++) {
-                    for (int j = 0; j < datos[i].length; j++) {
-                        bw.write(datos[i][j]);
-                        if (j < datos[i].length - 1) {
-                            bw.write(",");
-                        }
-                    }
-                    bw.write("\n");
+                for (String[] fila : datos) {
+                    bw.write(String.join(",", fila));
+                    bw.newLine();
                 }
-                System.out.println("Archivo CSV actualizado correctamente.");
             } catch (IOException e) {
                 System.out.println("Error al actualizar el archivo CSV: " + e.getMessage());
             }
