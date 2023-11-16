@@ -15,6 +15,8 @@ public class Historial extends javax.swing.JFrame {
      */
     public Historial() {
         initComponents();
+        GestionFinca gf = new GestionFinca();
+        gf.LeerCsv(TablaHistorial);
     }
 
     /**

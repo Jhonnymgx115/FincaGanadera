@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class GestionFinca {
 
-    public static void LeerCsv(JTable table) {
+    public void LeerCsv(JTable table) {
         try {
             File archivo = new File("datos_vacas.csv");
             FileReader fr = new FileReader(archivo);
@@ -30,15 +30,26 @@ public class GestionFinca {
             modelotabla.setRowCount(0);
 
             while ((linea = bf.readLine()) != null) {
-                String[] vaca = linea.split(",");
+                String[] temp = linea.split(",");
+                String[] vaca = new String[temp.length + 1];
+
+                for (int i = 0; i < temp.length; i++) {
+                    vaca[i] = temp[i];
+                }
+
+                if (vaca[1].equals("esp")) {
+                    vaca[vaca.length - 1] = "En Venta";
+                } else {
+                    vaca[vaca.length - 1] = "Disponible";
+                }
                 modelotabla.addRow(vaca);
             }
         } catch (IOException e) {
             System.out.println("Error en el archivo");
         }
     }
-    
-    public void EscribirCsv(String[] vaca){
+
+    public void EscribirCsv(String[] vaca) {
         FileWriter archivo = null;
         PrintWriter pw = null;
 
