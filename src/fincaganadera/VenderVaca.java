@@ -4,6 +4,7 @@
  */
 package fincaganadera;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,9 +38,9 @@ public class VenderVaca extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaVender = new javax.swing.JTable();
         BotonVender = new javax.swing.JButton();
+        BotonRevisar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         TablaVendidas = new javax.swing.JTable();
-        BotonRevisar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -60,9 +61,17 @@ public class VenderVaca extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "RAZA", "Potrero", "Vacunacion", "Peso", "Estado"
+                "ID", "RAZA", "Potrero", "Peso", "Vacunacion", "Estado"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(TablaVender);
 
         BotonVender.setText("Vender!");
@@ -72,19 +81,6 @@ public class VenderVaca extends javax.swing.JFrame {
             }
         });
 
-        TablaVendidas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "RAZA", "Potrero", "Vacunacion", "Peso", "Estado"
-            }
-        ));
-        jScrollPane3.setViewportView(TablaVendidas);
-
         BotonRevisar.setText("Revisar Disponibilidad");
         BotonRevisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,31 +88,52 @@ public class VenderVaca extends javax.swing.JFrame {
             }
         });
 
+        TablaVendidas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "RAZA", "Potrero", "Peso", "Vacunacion", "Estado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(TablaVendidas);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BotonVender)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(btn_atras))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(179, 179, 179)
-                            .addComponent(jLabel1))))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(151, Short.MAX_VALUE)
-                .addComponent(BotonRevisar)
-                .addGap(141, 141, 141))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btn_atras))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(242, 242, 242)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(BotonVender)
+                                    .addComponent(jLabel1)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(224, 224, 224)
+                                .addComponent(BotonRevisar)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 609, Short.MAX_VALUE)))
+                .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addContainerGap(16, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap()
+                    .addComponent(jScrollPane2)
                     .addGap(9, 9, 9)))
         );
         layout.setVerticalGroup(
@@ -126,18 +143,18 @@ public class VenderVaca extends javax.swing.JFrame {
                 .addComponent(btn_atras)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
+                .addGap(158, 158, 158)
                 .addComponent(BotonVender)
-                .addGap(162, 162, 162)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addComponent(BotonRevisar)
-                .addGap(22, 22, 22))
+                .addGap(19, 19, 19))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(67, 67, 67)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(67, 67, 67)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(56, Short.MAX_VALUE)))
+                    .addContainerGap(257, Short.MAX_VALUE)))
         );
 
         pack();
@@ -156,22 +173,45 @@ public class VenderVaca extends javax.swing.JFrame {
         if (filasel != -1) {
             DefaultTableModel modeloVender = (DefaultTableModel) TablaVender.getModel();
             DefaultTableModel modeloVendidas = (DefaultTableModel) TablaVendidas.getModel();
-            modeloVendidas.setRowCount(0);
-            
-            String[] filadatos = new String[modeloVender.getColumnCount()];
-            for (int i = 0; i < modeloVender.getColumnCount(); i++) {
-                filadatos[i] = String.valueOf(modeloVender.getValueAt(filasel, i));
+
+            System.out.println(modeloVender.getValueAt(filasel, 4));
+            if (String.valueOf(modeloVender.getValueAt(filasel, 4)).equals("V")) {
+
+                String[] filadatos = new String[modeloVender.getColumnCount()];
+                for (int i = 0; i < modeloVender.getColumnCount(); i++) {
+                    filadatos[i] = String.valueOf(modeloVender.getValueAt(filasel, i));
+                }
+                modeloVendidas.addRow(filadatos);
+                modeloVender.removeRow(filasel);
+            } else {
+                JOptionPane.showMessageDialog(null, "La vaca no esta vacunada, no se puede vender");
             }
 
-            modeloVendidas.addRow(filadatos);
-
-            modeloVender.removeRow(filasel);
+        } else {
+            JOptionPane.showMessageDialog(null, "NO has seleccionado ninguna vaca");
         }
 
     }//GEN-LAST:event_BotonVenderActionPerformed
 
     private void BotonRevisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonRevisarActionPerformed
-        // TODO add your handling code here:
+        int pesovacas = 0;
+        int pesocarros = 2000;
+        DefaultTableModel modeloVendidas = (DefaultTableModel) TablaVendidas.getModel();
+
+        try {
+            for (int i = 0; i < modeloVendidas.getRowCount(); i++) {
+                pesovacas += Integer.parseInt(String.valueOf(modeloVendidas.getValueAt(i, 3)));
+            }
+
+            int carrosnecesarios = pesovacas / pesocarros;
+            if (pesovacas % pesocarros != 0) {
+                carrosnecesarios++;
+            }
+
+            JOptionPane.showMessageDialog(null, "Se necesitan " + carrosnecesarios + " carros para transportar las vacas");
+        } catch (NumberFormatException e) {
+            System.out.println("Error con el peso de la vaca\n" + e);
+        }
     }//GEN-LAST:event_BotonRevisarActionPerformed
 
     /**
