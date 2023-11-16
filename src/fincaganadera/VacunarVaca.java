@@ -4,6 +4,9 @@
  */
 package fincaganadera;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author BlackHawk
@@ -18,6 +21,8 @@ public class VacunarVaca extends javax.swing.JFrame {
         GestionFinca gf = new GestionFinca();
         gf.CargarCsvTabla(TablaVacanacion);
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -131,7 +136,27 @@ public class VacunarVaca extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonVacunaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonVacunaActionPerformed
-        // TODO add your handling code here:
+        int filasel = TablaVacanacion.getSelectedRow();
+        
+         if (filasel != -1) {
+             
+            
+            DefaultTableModel modeloVacunar = (DefaultTableModel) TablaVacanacion.getModel();
+            System.out.println(modeloVacunar.getValueAt(filasel, 4));
+            if (String.valueOf(modeloVacunar.getValueAt(filasel, 4)).equals("V")) {
+                String[] filadatos = new String[modeloVacunar.getColumnCount()];
+                for (int i = 0; i < modeloVacunar.getColumnCount(); i++) {
+                    filadatos[i] = String.valueOf(modeloVacunar.getValueAt(filasel, i));
+                }
+                modeloVacunar.addRow(filadatos);
+            }else {
+                JOptionPane.showMessageDialog(null, "La vaca esta vacunada"+ "ID" + "no se puede vacunar");
+            }
+
+         }else{
+            JOptionPane.showMessageDialog(null, "NO has seleccionado ninguna vaca");
+        }
+                
     }//GEN-LAST:event_BotonVacunaActionPerformed
 
     private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
