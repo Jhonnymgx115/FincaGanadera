@@ -210,6 +210,11 @@ public class FincaGanadera extends javax.swing.JFrame {
         jButton6.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGENES/buscar-02.png"))); // NOI18N
         jButton6.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelShadow5Layout = new javax.swing.GroupLayout(panelShadow5);
         panelShadow5.setLayout(panelShadow5Layout);
@@ -418,6 +423,12 @@ public class FincaGanadera extends javax.swing.JFrame {
         ventanaMV.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_venderActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        Historial ventanaMV = new Historial();
+        ventanaMV.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
      private void agregarActionPerformed(java.awt.event.ActionEvent evt) {                                      
         AgregarVaca ventanaMV = new AgregarVaca();
