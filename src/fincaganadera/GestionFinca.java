@@ -22,6 +22,8 @@ import javax.swing.table.DefaultTableModel;
 public class GestionFinca {
 
     private static final String rutacsv = "datos_vacas.csv";
+    private static final String[] razas = {"Blanco Orejinegro", "Casanareño", "Chino Santadereano",
+        "Costeño con Cuernos", "Harton del Valle", "Romosinuano"};
 
     public static String[][] leerCSV() {
         String[][] datos = null;
@@ -101,47 +103,29 @@ public class GestionFinca {
     }
 
     public static boolean VerificarVaca(String[] vacanueva) {
-        String[][] datos = leerCSV();
-        if (vacanueva.length == 6) {
-            String id = vacanueva[0];
-            for (int i = 0; i < datos.length; i++) {
-                if (id == (datos[i][0])) {
-                    JOptionPane.showMessageDialog(null, "Ingresa todos los datos");
-                    return false;
-                }
-            }
-            int peso = Integer.parseInt(vacanueva[3]);
-            if (peso <= 0) {
-                JOptionPane.showMessageDialog(null, "El peso de la vaca debe ser mayor a cero.");
-                return false;
-            }
-            int potrero = Integer.parseInt(vacanueva[2]);
-            String raza = vacanueva[1];
-            int vacasxpotrero = 0;
-            int vacasxraza = 0;
-            for (int i = 0; i < datos.length; i++) {
-                String[] vaca = datos[i];
-                int numeroPotrero = Integer.parseInt(vaca[2]);
-                if (numeroPotrero == potrero) {
-                    vacasxpotrero++;
+        // Obtener el número de potrero y la raza de la nueva vaca
+        int npotrero = Integer.parseInt(vacanueva[2]);
+        String raza = vacanueva[1];
 
-                    if (raza.equals(vaca[1])) {
-                        vacasxraza++;
-                    }
-                }
-            }
+        int[][] contador = contarVacasPorPotreroYRaza();
 
-            if (vacasxpotrero < 2 && vacasxraza < 2) {
-                return true;
-            }else{
-                JOptionPane.showMessageDialog(null, "Potrero esta lleno, mandela pa' pa otro");
+        int inraza = -1;
+        for (int i = 0; i < razas.length; i++) {
+            if (raza.equals(razas[i])) {
+                inraza = i;
+                break;
             }
-                
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Error con la vaca, revise los datos");
-            return false;
         }
+        if (npotrero >= 1 && npotrero <= 8 && inraza != -1) {
+            if (contador[npotrero - 1][inraza] < 10) {
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "El número de vacas en el potrero y raza excede el límite.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "El número de potrero o la raza no son válidos.");
+        }
+
         return false;
     }
 
@@ -149,37 +133,76 @@ public class GestionFinca {
         FileWriter archivo = null;
         PrintWriter pw = null;
 
-        if (vaca.length != 6) {
+        if (VerificarVaca(vaca)) {
             try {
-                archivo = new FileWriter(rutacsv);
+                // Abre el archivo en modo de adición (true)
+                archivo = new FileWriter(rutacsv, true);
                 pw = new PrintWriter(archivo);
                 for (int i = 0; i < 6; i++) {
-                    pw.append(vaca[i]);
-                    pw.append("\n");
+                    if (i != 5) {
+                        pw.append(vaca[i] + ", ");
+                    } else {
+                        pw.append(vaca[i]);
+
+                    }
                 }
+                pw.append("\n");
 
             } catch (IOException e) {
-                System.out.println("error en el archivo");
+                System.out.println("Error en el archivo: " + e.getMessage());
+            } finally {
+                try {
+                    if (pw != null) {
+                        pw.close();
+                    }
+                    if (archivo != null) {
+                        archivo.close();
+                    }
+                } catch (IOException ex) {
+                    System.out.println("Error al cerrar el archivo: " + ex.getMessage());
+                }
             }
         }
     }
 
+    public static int[][] contarVacasPorPotreroYRaza() {
+        String[][] datos = leerCSV();
+        int npotreros = 8;
+
+        // Crear la matriz para contar el número de vacas por potrero y raza
+        int[][] contadorVacas = new int[npotreros][razas.length];
+
+        // Inicializar la matriz de contador
+        for (int i = 0; i < npotreros; i++) {
+            for (int j = 0; j < razas.length; j++) {
+                contadorVacas[i][j] = 0;
+            }
+        }
+
+        // Contar el número de vacas por potrero y raza
+        for (String[] vaca : datos) {
+            int npotrero = Integer.parseInt(vaca[2].replace(" ", ""));
+            String raza = vaca[1];
+
+            // Encontrar el índice de la raza en el arreglo de razas
+            int inraza = -1;
+            for (int i = 0; i < razas.length; i++) {
+                if (raza.equals(razas[i])) {
+                    inraza = i;
+                    break;
+                }
+            }
+
+            // Incrementar el contador correspondiente
+            if (npotrero >= 1 && npotrero <= npotreros && inraza != -1) {
+                contadorVacas[npotrero - 1][inraza]++;
+            }
+        }
+        return contadorVacas;
+    }
+
     public static void main(String[] args) {
-//        String[][] datos = leerCSV();
-//
-//        if (datos != null) {
-//            for (int i = 0; i < datos.length; i++) {
-//                for (int j = 0; j < datos[i].length; j++) {
-//                    System.out.print(datos[i][j] + ",");
-//                }
-//                System.out.println();
-//            }
-//        }
-//
-//        String[] nuevosDatos = {"00001", "Blanco Orejinegro", "6", "620", "V", "En Venta"};
-//        int nfila = 0;
-//        actualizarCSV(nuevosDatos, nfila);
-        String[] nuevavaca = {"00041", "Harton del Valle", "8", "840", "V", "Disponible"};
+        String[] nuevavaca = {"50", "Romosinuano", "4", "620", "V", "En Venta"};
         AgregarVaca(nuevavaca);
     }
 
