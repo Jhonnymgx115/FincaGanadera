@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,7 +32,6 @@ public class GestionFinca {
             BufferedReader br = new BufferedReader(fr);
             int nfilas = (int) br.lines().count();
             br.close();
-
 
             fr = new FileReader(archivo);
             br = new BufferedReader(fr);
@@ -75,8 +75,7 @@ public class GestionFinca {
         }
     }
 
-
-    public void CargarCsvTabla(JTable table) {
+    public static void CargarCsvTabla(JTable table) {
         try {
             File archivo = new File("datos_vacas.csv");
             FileReader fr = new FileReader(archivo);
@@ -101,7 +100,52 @@ public class GestionFinca {
         }
     }
 
-    public void AgregarVaca(String[] vaca) {
+    public static boolean VerificarVaca(String[] vacanueva) {
+        String[][] datos = leerCSV();
+        if (vacanueva.length == 6) {
+            String id = vacanueva[0];
+            for (int i = 0; i < datos.length; i++) {
+                if (id == (datos[i][0])) {
+                    JOptionPane.showMessageDialog(null, "Ingresa todos los datos");
+                    return false;
+                }
+            }
+            int peso = Integer.parseInt(vacanueva[3]);
+            if (peso <= 0) {
+                JOptionPane.showMessageDialog(null, "El peso de la vaca debe ser mayor a cero.");
+                return false;
+            }
+            int potrero = Integer.parseInt(vacanueva[2]);
+            String raza = vacanueva[1];
+            int vacasxpotrero = 0;
+            int vacasxraza = 0;
+            for (int i = 0; i < datos.length; i++) {
+                String[] vaca = datos[i];
+                int numeroPotrero = Integer.parseInt(vaca[2]);
+                if (numeroPotrero == potrero) {
+                    vacasxpotrero++;
+
+                    if (raza.equals(vaca[1])) {
+                        vacasxraza++;
+                    }
+                }
+            }
+
+            if (vacasxpotrero < 2 && vacasxraza < 2) {
+                return true;
+            }else{
+                JOptionPane.showMessageDialog(null, "Potrero esta lleno, mandela pa' pa otro");
+            }
+                
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Error con la vaca, revise los datos");
+            return false;
+        }
+        return false;
+    }
+
+    public static void AgregarVaca(String[] vaca) {
         FileWriter archivo = null;
         PrintWriter pw = null;
 
@@ -119,6 +163,7 @@ public class GestionFinca {
             }
         }
     }
+
     public static void main(String[] args) {
 //        String[][] datos = leerCSV();
 //
@@ -130,10 +175,12 @@ public class GestionFinca {
 //                System.out.println();
 //            }
 //        }
-
-        String[] nuevosDatos = {"00001", "Blanco Orejinegro", "6", "620", "V", "En Venta"};
-        int nfila = 0;
-        actualizarCSV(nuevosDatos, nfila);
+//
+//        String[] nuevosDatos = {"00001", "Blanco Orejinegro", "6", "620", "V", "En Venta"};
+//        int nfila = 0;
+//        actualizarCSV(nuevosDatos, nfila);
+        String[] nuevavaca = {"00041", "Harton del Valle", "8", "840", "V", "Disponible"};
+        AgregarVaca(nuevavaca);
     }
 
 }
