@@ -4,6 +4,8 @@
  */
 package fincaganadera;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author BlackHawk
@@ -15,6 +17,8 @@ public class VenderVaca extends javax.swing.JFrame {
      */
     public VenderVaca() {
         initComponents();
+        GestionFinca gf = new GestionFinca();
+        gf.LeerCsv(TablaVender);
     }
 
     /**
@@ -146,7 +150,24 @@ public class VenderVaca extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_atrasActionPerformed
 
     private void BotonVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonVenderActionPerformed
-        // TODO add your handling code here:
+
+        int filasel = TablaVender.getSelectedRow();
+
+        if (filasel != -1) {
+            DefaultTableModel modeloVender = (DefaultTableModel) TablaVender.getModel();
+            DefaultTableModel modeloVendidas = (DefaultTableModel) TablaVendidas.getModel();
+            modeloVendidas.setRowCount(0);
+            
+            String[] filadatos = new String[modeloVender.getColumnCount()];
+            for (int i = 0; i < modeloVender.getColumnCount(); i++) {
+                filadatos[i] = String.valueOf(modeloVender.getValueAt(filasel, i));
+            }
+
+            modeloVendidas.addRow(filadatos);
+
+            modeloVender.removeRow(filasel);
+        }
+
     }//GEN-LAST:event_BotonVenderActionPerformed
 
     private void BotonRevisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonRevisarActionPerformed
