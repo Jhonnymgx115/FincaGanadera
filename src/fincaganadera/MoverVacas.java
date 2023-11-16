@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,9 +20,17 @@ public class MoverVacas extends javax.swing.JFrame {
     public MoverVacas() {
         
          initComponents();
+         comboLlegada();
         GestionFinca gf = new GestionFinca();
         gf.CargarCsvTabla(TablaVacas);
          
+    }
+    public void comboLlegada(){
+        int contador = 0;
+        for(int i = 0; i<8;i++){
+            contador++;
+          PotreroDestino.addItem(String.valueOf(contador));
+        }
     }
 
 
@@ -34,8 +43,6 @@ public class MoverVacas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Seleccionar_Potrero = new javax.swing.JLabel();
-        PotreroOrigen = new javax.swing.JComboBox<>();
         PotreroDestino = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         Mover = new javax.swing.JButton();
@@ -44,16 +51,6 @@ public class MoverVacas extends javax.swing.JFrame {
         TablaVacas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        Seleccionar_Potrero.setText("Seleccione el potrero");
-
-        PotreroOrigen.setMaximumRowCount(10);
-        PotreroOrigen.setSelectedItem(null);
-        PotreroOrigen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PotreroOrigenActionPerformed(evt);
-            }
-        });
 
         PotreroDestino.setMaximumRowCount(10);
 
@@ -78,11 +75,11 @@ public class MoverVacas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "RAZA", "Potrero ", "Vacunacion", "Estado"
+                "ID", "RAZA", "Potrero ", "Peso", "Vacunacion", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -102,36 +99,29 @@ public class MoverVacas extends javax.swing.JFrame {
                         .addComponent(btn_atrasM))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(187, 187, 187)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Mover)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(Seleccionar_Potrero)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(PotreroOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(217, 217, 217)
-                                    .addComponent(jLabel3)
-                                    .addGap(26, 26, 26)
-                                    .addComponent(PotreroDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(271, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(26, 26, 26)
+                                .addComponent(PotreroDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Mover))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(351, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(btn_atrasM)
-                .addGap(119, 119, 119)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Seleccionar_Potrero)
-                    .addComponent(PotreroOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PotreroDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(35, 35, 35)
-                .addComponent(Mover)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(288, Short.MAX_VALUE)
+                .addContainerGap(247, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(PotreroDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(Mover))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(124, Short.MAX_VALUE))
         );
@@ -139,10 +129,6 @@ public class MoverVacas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void PotreroOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PotreroOrigenActionPerformed
-    
-    }//GEN-LAST:event_PotreroOrigenActionPerformed
-
     private void btn_atrasMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasMActionPerformed
        FincaGanadera ventanaPrincipal = new FincaGanadera();
         ventanaPrincipal.setVisible(true);
@@ -150,14 +136,27 @@ public class MoverVacas extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_atrasMActionPerformed
 
     private void MoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MoverActionPerformed
-
+        int filasel = TablaVacas.getSelectedRow();
+        if (filasel != -1) {
+            DefaultTableModel modeloVacunar = (DefaultTableModel) TablaVacas.getModel();
+            if (String.valueOf(modeloVacunar.getValueAt(filasel, 2)).equals("V")) {
+                JOptionPane.showMessageDialog(null, "La vaca esta vacunada");
+            } else {
+                String[] vaca = new String[6];
+                for (int i = 0; i < vaca.length; i++) {
+                    vaca[i] = String.valueOf(modeloVacunar.getValueAt(filasel, i));
+                }
+                vaca[2] = String.valueOf(PotreroDestino.getSelectedItem());
+                JOptionPane.showMessageDialog(null, "La vaca " + vaca[0] +" se movio");
+                GestionFinca.actualizarCSV(vaca, filasel);
+                GestionFinca.CargarCsvTabla(TablaVacas);
+            }
+        }
     }//GEN-LAST:event_MoverActionPerformed
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Mover;
     private javax.swing.JComboBox<String> PotreroDestino;
-    private javax.swing.JComboBox<String> PotreroOrigen;
-    private javax.swing.JLabel Seleccionar_Potrero;
     private javax.swing.JTable TablaVacas;
     private javax.swing.JButton btn_atrasM;
     private javax.swing.JLabel jLabel3;
