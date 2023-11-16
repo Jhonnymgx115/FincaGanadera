@@ -19,7 +19,9 @@ public class MoverVacas extends javax.swing.JFrame {
     public MoverVacas() {
         
          initComponents();
-    
+        GestionFinca gf = new GestionFinca();
+        gf.CargarCsvTabla(TablaVacas);
+         
     }
 
 

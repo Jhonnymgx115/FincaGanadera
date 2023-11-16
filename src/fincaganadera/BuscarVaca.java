@@ -15,6 +15,8 @@ public class BuscarVaca extends javax.swing.JFrame {
      */
     public BuscarVaca() {
         initComponents();
+        GestionFinca gf = new GestionFinca();
+        gf.CargarCsvTabla(TablaBuscar);
     }
 
     /**

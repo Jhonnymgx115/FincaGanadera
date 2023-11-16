@@ -50,9 +50,17 @@ public class Historial extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "RAZA", "Potrero ", "Vacunacion", "Peso", "Estado"
+                "ID", "RAZA", "Potrero ", "Peso", "Vacunacion", "Estado"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(TablaHistorial);
 
         jLabel1.setText("Historial");
